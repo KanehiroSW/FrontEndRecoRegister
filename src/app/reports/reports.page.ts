@@ -85,8 +85,17 @@ export class ReportsPage implements OnInit {
     if (!dateStr) {
       return '';
     }
+    
+    // Extraer directamente la fecha de la cadena sin convertirla a objeto Date
     const date = new Date(dateStr as string);
-    return date.toISOString().split('T')[0];
+    
+    // Obtener los componentes de la fecha
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+  
+    // Devolver en formato 'YYYY-MM-DD'
+    return `${year}-${month}-${day}`;
   }
 
   validateDates(fechaInicio: string, fechaFin: string): boolean {
