@@ -1,0 +1,103 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+
+.icocon {
+  padding: 35px;
+  max-width: 100%;
+  margin: auto;
+  margin-top: 5%;
+  --background: url("/assets/FondoUCVHorario.png") no-repeat center center;
+  --background-size: cover;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-family: "Nunito", sans-serif;
+}
+
+.content {
+  padding: 20px;
+  background: white;
+  margin: auto;
+  width: 85%;
+  border-radius: 50px;
+  box-shadow: 0 0 20px rgb(50, 50, 50);
+  text-align: center;
+  font-family: "Nunito", sans-serif;
+}
+
+.lbltit{
+  font-size: 35px;
+  font-weight: 500;
+  height: 40px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.shift {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.time-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+ion-input {
+  height: 20px;
+  border-radius: 5px;
+  border: 1px solid black;
+  margin-right: 5px;
+  text-align: center;
+  width: 50px;
+}
+
+ion-input{
+  width: 80px;
+  font-family: "Nunito", sans-serif;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  ion-label {
+    margin-right: 10px;
+  }
+
+  span {
+    margin-right: 10px;
+  }
+}
+
+.input-sal {
+  margin-right: 26%;
+}
+
+.input-en {
+  margin-left: 6.2%;
+}
+
+.inpam {
+  margin-left: 5px;
+}
+
+.inpen {
+  margin-left: 4.5%;
+  width: 26%;
+}
+
+ion-button {
+  --background: #eb0000;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 15px;
+  border-radius: 5px;
+  font-weight: 600;
+  --box-shadow: none;
+  font-family: "Nunito", sans-serif;
+}

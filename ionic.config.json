@@ -1,0 +1,7 @@
+{
+  "name": "Front-End-Reconocimiento",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
