@@ -19,11 +19,6 @@ const routes: Routes = [
     loadChildren: () => import('./register/register.module').then(m => m.RegisterPageModule)
   },
   {
-    path: 'horario',
-    loadChildren: () => import('./horario/horario.module').then(m => m.HorarioPageModule),
-    canActivate: [AuthGuard]
-  },
-  {
     path: 'exit',
     loadChildren: () => import('./exit/exit.module').then(m => m.ExitPageModule),
     canActivate: [AuthGuard]

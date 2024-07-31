@@ -13,8 +13,8 @@ import { AuthService } from 'src/services/auth.service';
 export class AdministradorPage implements OnInit {
   breakActive: boolean = false;
   breakFinished: boolean = false;
-  minutes: number = 0;
-  seconds: number = 5;
+  minutes: number = 15;
+  seconds: number = 0;
   interval: any;
 
   Usuario: UsuarioResponse = {

@@ -57,7 +57,12 @@ export class ExitPage implements OnInit {
     this.FaceService.facialLogin(imageData).subscribe(
       async (response) => {
         if (response.success) {
-          await this.marcarSalida(response.user_id, response.rol);
+          const currentUserId = this.authService.getUserId();
+          if (response.user_id === currentUserId) {
+            await this.marcarSalida(response.user_id, response.rol);
+          } else {
+            this.showToast('Usted es un IMPOSTOR.');
+          }
         } else {
           this.showToast(response.message);
         }

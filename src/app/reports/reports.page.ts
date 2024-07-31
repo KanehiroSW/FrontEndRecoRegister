@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild} from '@angular/core';
 import { IonDatetime, IonSelect } from '@ionic/angular';
 import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { ReportesService } from 'src/services/reportes.service';
-import { DocenteResponse } from 'src/interfaces/intUsuario/DocenteResponse';
+import { UserReportResponse } from '../../interfaces/intReporte/UserReportResponse';
 
 @Component({
   selector: 'app-reports',
@@ -12,34 +12,35 @@ import { DocenteResponse } from 'src/interfaces/intUsuario/DocenteResponse';
 export class ReportsPage implements OnInit {
   @ViewChild('fechaInicio', { static: false }) fechaInicio!: IonDatetime;
   @ViewChild('fechaFin', { static: false }) fechaFin!: IonDatetime;
-  @ViewChild('docenteSelect', { static: false }) docenteSelect!: IonSelect;
+  @ViewChild('userSelect', { static: false }) userSelect!: IonSelect;
 
-  public Docentes: DocenteResponse [] = [];
+  public Users: UserReportResponse [] = [];
 
   constructor(
     private repSvc: ReportesService,
+    private alertCrl: AlertController
   ) { }
 
   ngOnInit() {
-    this.repSvc.getAllDocentes()
-    .subscribe(Docente => this.Docentes.push(...Docente));
+    this.repSvc.getAllUsers()
+    .subscribe(User => this.Users.push(...User));
   }
 
   verMarcaciones(){
     const fechaInicioValue = this.formatDate(this.fechaInicio.value);
     const fechaFinValue = this.formatDate(this.fechaFin.value);
-    const idDocente = this.docenteSelect.value as number;
+    const idUser = this.userSelect.value as number;
 
     if (fechaInicioValue && fechaFinValue) {
       if (this.validateDates(fechaInicioValue, fechaFinValue)) {
-        if (idDocente === undefined || idDocente == 0) {
+        if (idUser === undefined || idUser == 0) {
           this.repSvc.pdfMarcasGeneral(fechaInicioValue, fechaFinValue).subscribe((response: Blob) => {
             this.downloadBlob(response, 'reporte_marcas_general.pdf');
           }, error => {
             console.error('Error al generar el PDF:', error);
           });
         } else {
-          this.repSvc.pdfMarcasUser(fechaInicioValue, fechaFinValue, idDocente).subscribe((response: Blob) => {
+          this.repSvc.pdfMarcasUser(fechaInicioValue, fechaFinValue, idUser).subscribe((response: Blob) => {
             this.downloadBlob(response, 'reporte_marcas_user.pdf');
           }, error => {
             console.error('Error al generar el PDF:', error);
@@ -54,18 +55,18 @@ export class ReportsPage implements OnInit {
   verTardanzas(){
     const fechaInicioValue = this.formatDate(this.fechaInicio.value);
     const fechaFinValue = this.formatDate(this.fechaFin.value);
-    const idDocente = this.docenteSelect.value as number;
+    const idUser = this.userSelect.value as number;
 
     if (fechaInicioValue && fechaFinValue) {
       if (this.validateDates(fechaInicioValue, fechaFinValue)) {
-        if (idDocente === undefined || idDocente == 0) {
+        if (idUser === undefined || idUser == 0) {
           this.repSvc.pdfMinTardeFecha(fechaInicioValue, fechaFinValue).subscribe((response: Blob) => {
             this.downloadBlob(response, 'reporte_min_tarde_fecha.pdf');
           }, error => {
             console.error('Error al generar el PDF:', error);
           });
         } else {
-          this.repSvc.pdfMinTardeUser(fechaInicioValue, fechaFinValue, idDocente).subscribe((response: Blob) => {
+          this.repSvc.pdfMinTardeUser(fechaInicioValue, fechaFinValue, idUser).subscribe((response: Blob) => {
             this.downloadBlob(response, 'reporte_min_tarde_user.pdf');
           }, error => {
             console.error('Error al generar el PDF:', error);
@@ -77,8 +78,37 @@ export class ReportsPage implements OnInit {
     }
   }
 
-  verFaltas(){
+  async verFaltas(){
+    const fechaInicioValue = this.formatDate(this.fechaInicio.value);
+    const fechaFinValue = this.formatDate(this.fechaFin.value);
+    const idUser = this.userSelect.value as number;
+    let month: number = 0;
+    
+    if (fechaInicioValue){
+      const fechaInicioDate = new Date(fechaInicioValue);
+      const mes = fechaInicioDate.getMonth() + 1
+      month = mes;
+    }
 
+    if (fechaInicioValue && fechaFinValue) {
+      if (this.validateDates(fechaInicioValue, fechaFinValue)) {
+        if (idUser === undefined || idUser == 0) {
+          this.repSvc.pdfFaltasGeneral(fechaInicioValue, fechaFinValue,month).subscribe((response: Blob) => {
+            this.downloadBlob(response, 'reporte_falta_general.pdf');
+          }, error => {
+            console.error('Error al generar el PDF:', error);
+          });
+        } else {
+          this.repSvc.pdfFaltasUser(fechaInicioValue, fechaFinValue, month, idUser).subscribe((response: Blob) => {
+            this.downloadBlob(response, 'reporte_falta_user.pdf');
+          }, error => {
+            console.error('Error al generar el PDF:', error);
+          });
+        }
+      }
+    } else {
+      console.error('Por favor, seleccione ambas fechas');
+    }
   }
 
   private formatDate(dateStr: string | string[] | null | undefined): string {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { DocenteResponse } from 'src/interfaces/intUsuario/DocenteResponse';
+import { UserReportResponse } from '../interfaces/intReporte/UserReportResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +12,9 @@ export class ReportesService {
 
   constructor(private http: HttpClient) { }
 
-  getAllDocentes(): Observable<DocenteResponse[]>{
-    return this.http.get<DocenteResponse[]>
-    (`${this.urlbase}/all_docentes`);
+  getAllUsers(): Observable<UserReportResponse[]>{
+    return this.http.get<UserReportResponse[]>
+    (`${this.urlbase}/all_users`);
   }
 
   pdfMarcasGeneral(fechaInicio: string, fechaFin: string): Observable<Blob>{
@@ -52,7 +52,25 @@ export class ReportesService {
       idUser: idUsuario
     };
     return this.http.post(`${this.urlbase}/minutos_tarde_user`, body, { responseType: 'blob' });
+  }
 
+  pdfFaltasUser(fechaInicio: string, fechaFin: string, mes: number, idUsuario: number, ){
+    const body = {
+      ini_date: fechaInicio,
+      fin_date: fechaFin,
+      mes: mes,
+      idUser: idUsuario
+    };
+    return this.http.post(`${this.urlbase}/falta_user`, body, { responseType: 'blob' });
+  }
+
+  pdfFaltasGeneral(fechaInicio: string, fechaFin: string, mes: number){
+    const body = {
+      ini_date: fechaInicio,
+      fin_date: fechaFin,
+      mes: mes
+    };
+    return this.http.post(`${this.urlbase}/falta_general`, body, { responseType: 'blob' });
   }
 
 }

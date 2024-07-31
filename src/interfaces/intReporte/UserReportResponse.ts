@@ -1,4 +1,4 @@
-export interface DocenteResponse {
+export interface UserReportResponse {
     idUsuario: number;
     nombre:    string;
     apell:     string

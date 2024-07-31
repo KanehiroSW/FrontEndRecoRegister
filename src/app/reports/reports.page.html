@@ -1,7 +1,6 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <form>
       <ion-col size="6">
         <ion-item class="iitdate" lines="none">
           <ion-label position="stacked">Fecha Inicio:</ion-label>
@@ -16,11 +15,11 @@
       </ion-col>
       <ion-col size="12">
         <ion-item lines="none">
-          <ion-select #docenteSelect interface="popover" placeholder="Selecciona un Usuario">
+          <ion-select #userSelect interface="popover" placeholder="Selecciona un Usuario">
             <ion-select-option value="0">General</ion-select-option>
             <ion-select-option 
-              *ngFor="let docente of Docentes; let i = index"
-              [value]="docente.idUsuario">{{docente.apell}} {{docente.nombre}}</ion-select-option>
+              *ngFor="let user of Users; let i = index"
+              [value]="user.idUsuario">{{user.apell}} {{user.nombre}}</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
@@ -31,7 +30,6 @@
           <ion-button class="btnfal" (click)="verFaltas()">REPORTE DE FALTAS</ion-button>
         </ion-buttons>
       </ion-col>
-      </form>
     </ion-row>
   </ion-grid>
 </ion-content>
